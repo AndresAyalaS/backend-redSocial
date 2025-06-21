@@ -1,31 +1,33 @@
 # Post Service
 
-This directory contains the implementation of the Post Service for the social network application. The Post Service is responsible for managing user posts, including creating posts, retrieving posts, and handling likes.
+Este directorio contiene la implementación del Servicio de Publicaciones para la aplicación de red social. Este servicio es responsable de gestionar las publicaciones de los usuarios, incluyendo la creación, recuperación de publicaciones y gestión de likes.
 
-## Directory Structure
+## Estructura del Proyecto
 
-- **src/**: Contains the source code for the Post Service.
-  - **controllers/**: Contains the `postController.ts` which handles incoming requests related to posts.
-  - **models/**: Contains the `post.ts` model that defines the structure of a post in the database.
-  - **routes/**: Contains the `postRoutes.ts` which defines the routes for post-related operations.
-  - **services/**: Contains the `postService.ts` which includes the business logic for managing posts.
-  - **middlewares/**: Contains the `errorHandler.ts` middleware for handling errors.
-  - **utils/**: Contains utility functions related to posts.
-  - **index.ts**: The entry point for the Post Service, where the Express server is configured.
+- **src/**: Contiene el código fuente del servicio.
+  - **controllers/**: Controladores que manejan las solicitudes HTTP. 
+    - `postController.ts` which handles incoming requests related to posts.
+  - **models/**: Contiene el modelo `post.ts` que define la estructura de una publicación en la base de datos.
+  - **routes/**: Contiene `postRoutes.ts` donde se definen las rutas para operaciones relacionadas con publicaciones.
+  - **services/**: Contiene `postService.ts` con la lógica de negocio para gestionar publicaciones.
+  - **middlewares/**: Contiene `errorHandler.ts` middleware para el manejo de errores.
+  - **utils/**: Contiene funciones utilitarias relacionadas con publicaciones.
+  - **index.ts**: Punto de entrada del servicio, donde se configura el servidor Express.
 
 ## API Endpoints
 
-- **POST /posts**: Create a new post.
-- **GET /posts**: Retrieve a list of all posts.
-- **POST /posts/:id/like**: Like a specific post.
+- **POST /posts**: Crear una nueva publicación.
+- **GET /posts**: Obtener la lista de todas las publicaciones.
+- **POST /posts/:id/like**: Dar like a una publicación específica.
+- **GET /posts/user/:id/**: Obtener todas las publicaciones de un usuario específico por su ID.
 
 ## Database
 
-The Post Service uses PostgreSQL as its database. The `post` table is defined in the migration scripts located in the `database/migrations/init.sql` file.
+El servicio utiliza PostgreSQL como base de datos. La tabla `post` se define en los scripts de migración ubicados en el archivo `database/migrations/init.sql`
 
 ## Docker
 
-A Dockerfile is provided to containerize the Post Service. Use the following command to build and run the service:
+Se proporciona un Dockerfile para contenerizar el servicio. Usa los siguientes comandos para construir e iniciar el servicio:
 
 ```bash
 docker build -t post-service .
@@ -34,7 +36,7 @@ docker run -p 3000:3000 post-service
 
 ## Installation
 
-To install the necessary dependencies, run:
+Para instalar las dependencias necesarias, ejecuta:
 
 ```bash
 npm install
@@ -42,16 +44,16 @@ npm install
 
 ## Running the Service
 
-To start the Post Service, use:
+Para iniciar el servicio de publicaciones, ejecuta:
 
 ```bash
 npm start
 ```
 
-## Testing
+## Contribuciones
 
-Make sure to write unit tests for the Post Service to ensure the functionality works as expected.
+Las contribuciones son bienvenidas. Si deseas contribuir, por favor abre un issue o envía un pull request.
 
-## Contributing
+## Licencia
 
-Feel free to contribute to the Post Service by submitting issues or pull requests.
+Este proyecto está bajo la Licencia MIT.
