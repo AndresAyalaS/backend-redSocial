@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16
+    container_name: social_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Saralu15*
+      POSTGRES_DB: redsocial
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./database/migrations:/docker-entrypoint-initdb.d
+      - db_data:/var/lib/postgresql/data
+
+  auth-service:
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+    container_name: auth_service
+    ports:
+      - "3001:3001"
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: Saralu15*
+      DB_DATABASE: redsocial
+      JWT_SECRET: supersecret
+      PORT: 3001
+    depends_on:
+      - db
+
+  post-service:
+    build:
+      context: ./post-service
+      dockerfile: Dockerfile
+    container_name: post_service
+    ports:
+      - "3002:3002"
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: Saralu15*
+      DB_DATABASE: redsocial
+      JWT_SECRET: supersecret
+      PORT: 3002
+    depends_on:
+      - db
+
+  user-service:
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
+    container_name: user_service
+    ports:
+      - "3003:3003"
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: Saralu15*
+      DB_DATABASE: redsocial
+      JWT_SECRET: supersecret
+      PORT: 3003
+    depends_on:
+      - db
+
+volumes:
+  db_data:
