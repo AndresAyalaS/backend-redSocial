@@ -1,19 +1,21 @@
-import express from 'express';
-import dotenv from 'dotenv';
-import swaggerUi from 'swagger-ui-express';
-import swaggerDocument from './swagger.json';
-import userRoutes from './routes/userRoutes';
+import express from "express";
+import dotenv from "dotenv";
+import swaggerUi from "swagger-ui-express";
+import swaggerDocument from "./swagger.json";
+import userRoutes from "./routes/userRoutes";
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
+app.use("/api/users", userRoutes);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-app.use('/api/users', userRoutes);
+export default app;
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
-const PORT = process.env.PORT || 3003;
-app.listen(PORT, () => {
-  console.log(`User service running on port ${PORT}`);
-});
+if (process.env.NODE_ENV !== "test") {
+  const PORT = process.env.PORT || 3003;
+  app.listen(PORT, () => {
+    console.log(`User service running on port ${PORT}`);
+  });
+}
