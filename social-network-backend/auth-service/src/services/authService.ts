@@ -20,7 +20,11 @@ class AuthService {
             userData.alias
         ];
         const result = await pool.query(query, values);
-        return result.rows[0];
+        const user = result.rows[0];
+
+        const token = generateToken(user.id);
+
+        return {user, token};
     }
 
     async login(email: string, password: string) {
@@ -37,19 +41,6 @@ class AuthService {
         const token = generateToken(user.id);
         const { password: _, ...userData } = user;
         return { user: userData, token };
-    }
-
-    async getUserProfile(userId: string) {
-        const query = `
-            SELECT id, email, first_name AS "firstName", last_name AS "lastName", birth_date AS "birthDate", alias, created_at AS "createdAt"
-            FROM users WHERE id = $1
-        `;
-        const result = await pool.query(query, [userId]);
-        const user = result.rows[0];
-        if (!user) {
-            throw new Error('User not found');
-        }
-        return user;
     }
 }
 

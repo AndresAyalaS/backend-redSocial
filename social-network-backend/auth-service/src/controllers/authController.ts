@@ -6,7 +6,7 @@ export class AuthController {
     try {
       const { email, password, firstName, lastName, birthDate, alias } =
         req.body;
-      const user = await AuthService.register({
+      const {user, token} = await AuthService.register({
         email,
         password,
         firstName,
@@ -14,7 +14,7 @@ export class AuthController {
         birthDate,
         alias,
       });
-      res.status(201).json({ user });
+      res.status(201).json({ user, token  });
     } catch (error: any) {
       if (error.code === "23505") {        
         return res
